@@ -99,3 +99,90 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Danh sách các danh mục và sản phẩm tương ứng
+    const categories = {
+        "Mac": ["MacBook Air", "MacBook Pro", "iMac", "Mac Mini"],
+        "Iphone": ["iPhone 13", "iPhone 14", "iPhone 15 Pro", "iPhone SE"],
+        "Watch": ["Apple Watch Series 8", "Apple Watch Ultra", "Apple Watch SE"],
+        "AirPods": ["AirPods 2", "AirPods 3", "AirPods Pro", "AirPods Max"]
+    };
+
+    let activeMenu = null;
+
+    // Lấy danh sách tất cả các mục trong nav
+    const navItems = document.querySelectorAll("nav a");
+
+    navItems.forEach(item => {
+        const categoryName = item.textContent.trim();
+        if (categories[categoryName]) {
+            // Tạo dropdown menu
+            const dropdownMenu = document.createElement("div");
+            dropdownMenu.classList.add("dropdown-menu");
+
+            // Thêm danh sách sản phẩm
+            categories[categoryName].forEach(product => {
+                const productLink = document.createElement("a");
+                productLink.href = "#";
+                productLink.textContent = product;
+                dropdownMenu.appendChild(productLink);
+            });
+
+            // Thêm menu vào body để nó đè lên toàn bộ nội dung
+            document.body.appendChild(dropdownMenu);
+
+            // Xử lý hover
+            item.addEventListener("mouseenter", () => {
+                if (activeMenu) {
+                    activeMenu.classList.remove("active");
+                }
+                dropdownMenu.classList.add("active");
+                activeMenu = dropdownMenu;
+            });
+
+            // Ẩn menu khi di chuột ra ngoài
+            dropdownMenu.addEventListener("mouseleave", () => {
+                dropdownMenu.classList.remove("active");
+                activeMenu = null;
+            });
+        }
+    });
+
+    // Ẩn menu khi click ra ngoài
+    document.addEventListener("click", (e) => {
+        if (activeMenu && !e.target.closest(".dropdown-menu") && !e.target.closest("nav a")) {
+            activeMenu.classList.remove("active");
+            activeMenu = null;
+        }
+    });
+});
+
+//Search
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input");
+    const dropdownSearch = document.getElementById("dropdown-search");
+
+    // Hiển thị dropdown khi click vào ô tìm kiếm
+    searchInput.addEventListener("focus", function () {
+        dropdownSearch.classList.add("active");
+    });
+
+    // Ẩn dropdown khi click ra ngoài
+    document.addEventListener("click", function (e) {
+        if (!e.target.closest(".search-container")) {
+            dropdownSearch.classList.remove("active");
+        }
+    });
+
+    // Ẩn chữ "Tìm kiếm sản phẩm" khi nhập
+    searchInput.addEventListener("input", function () {
+        if (searchInput.value.trim() === "") {
+            searchInput.setAttribute("placeholder", "Tìm kiếm sản phẩm");
+        } else {
+            searchInput.setAttribute("placeholder", "");
+        }
+    });
+});
+
+
