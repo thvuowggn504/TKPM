@@ -185,4 +185,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// user
+document.addEventListener("DOMContentLoaded", function () {
+    const loginBtn = document.getElementById("login-btn");
+    const userInfo = document.getElementById("user-info");
+    const usernameSpan = document.getElementById("username");
+    const userDropdown = document.querySelector(".user-dropdown");
+    const logoutBtn = document.getElementById("logout-btn");
+
+    // Lấy thông tin người dùng từ localStorage
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if (currentUser) {
+        loginBtn.style.display = "none";
+        userInfo.classList.remove("hidden");
+        usernameSpan.textContent = currentUser.name;
+    }
+
+    // Hover để hiện dropdown
+    userInfo.addEventListener("mouseenter", () => {
+        userDropdown.style.display = "block";
+    });
+
+    userInfo.addEventListener("mouseleave", () => {
+        userDropdown.style.display = "none";
+    });
+
+    // Xử lý đăng xuất
+    logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("currentUser");
+        alert("Bạn đã đăng xuất!");
+        window.location.reload();
+    });
+});
+
+
+
 

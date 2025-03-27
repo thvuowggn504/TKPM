@@ -543,3 +543,74 @@ section .container .content .action .action-2:hover {
 .dropdown-search.active {
   display: block;
 }
+
+/* người dùng */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #000;
+  /* Hoặc màu phù hợp với thiết kế của bạn */
+}
+
+.user-profile i {
+  font-size: 18px;
+}
+
+/* user */
+.hidden {
+  display: none !important;
+}
+
+#user-info {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Đảm bảo dropdown hiển thị trên các phần khác */
+/* Định dạng dropdown */
+.user-dropdown {
+  position: absolute;
+  top: 100%; /* Hiển thị ngay dưới user-info */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%); /* Dịch ngược lại 50% chiều rộng */
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* Đảm bảo dropdown không bị che */
+  min-width: 150px;
+  text-align: center;
+}
+
+/* Định dạng màu chữ */
+.user-dropdown a,
+.user-dropdown span {
+  display: block;
+  color: black; /* Màu chữ đen */
+  text-decoration: none;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+/* Hiệu ứng hover */
+.user-dropdown a:hover,
+.user-dropdown span:hover {
+  background-color: #f0f0f0;
+}
+
+/* Đảm bảo dropdown hiển thị khi hover */
+.user-dropdown {
+  display: none;
+}
+
+#user-info {
+  position: relative; /* Để dropdown có thể căn theo user-info */
+  cursor: pointer;
+}
+
+#user-info:hover .user-dropdown {
+  display: block;
+}

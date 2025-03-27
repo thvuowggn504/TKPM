@@ -27,8 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Lưu vào LocalStorage
-        localStorage.setItem("user", JSON.stringify({ name, email, password }));
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        if (users.some(user => user.email === email)) {
+            alert("Email đã được sử dụng!");
+            return;
+        }
+
+        users.push({ name, email, password });
+        localStorage.setItem("users", JSON.stringify(users));
         alert("Đăng ký thành công! Vui lòng đăng nhập.");
     });
 
@@ -38,16 +44,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = loginForm.querySelector("input[type='email']").value;
         const password = loginForm.querySelector("input[type='password']").value;
 
-        const savedUser = JSON.parse(localStorage.getItem("user"));
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const savedUser = users.find(user => user.email === email && user.password === password);
 
-        if (!savedUser || savedUser.email !== email || savedUser.password !== password) {
+        if (!savedUser) {
             alert("Sai email hoặc mật khẩu!");
             return;
         }
 
+        // Lưu thông tin người dùng hiện tại (không lưu password để tăng bảo mật)
+        localStorage.setItem("currentUser", JSON.stringify({ name: savedUser.name, email: savedUser.email }));
         alert(`Xin chào, ${savedUser.name}! Đăng nhập thành công.`);
 
-        // Chuyển hướng đến index.html
+        // Chuyển hướng đến trang chủ
         window.location.href = "home.html";
     });
 });
