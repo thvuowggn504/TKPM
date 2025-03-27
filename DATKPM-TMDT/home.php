@@ -1,3 +1,13 @@
+<?php
+require_once 'Category_Database.php';
+
+// Khởi tạo đối tượng Category_Database
+$categoryDB = new Category_Database();
+
+// Lấy danh sách danh mục
+$categories = $categoryDB->getAllCategories();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
