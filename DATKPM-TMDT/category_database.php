@@ -4,7 +4,7 @@ require_once 'config.php'; // Cấu hình database
 
 class Category_Database extends Database
 {
-    // 📌 1️⃣ Lấy tất cả danh mục
+    // Lấy tất cả danh mục
     public function getAllCategories()
     {
         $sql = self::$connection->prepare("SELECT * FROM categories");
@@ -12,7 +12,7 @@ class Category_Database extends Database
         return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    // 📌 2️⃣ Lấy danh mục theo ID
+    // Lấy danh mục theo ID
     public function getCategoryById($id)
     {
         $sql = self::$connection->prepare("SELECT * FROM categories WHERE id = ?");
@@ -22,7 +22,7 @@ class Category_Database extends Database
         return isset($result[0]) ? $result[0] : null;
     }
 
-    // 📌 3️⃣ Thêm danh mục mới
+    // Thêm danh mục mới
     public function addCategory($name)
     {
         $sql = self::$connection->prepare("INSERT INTO categories (name) VALUES (?)");
@@ -30,7 +30,7 @@ class Category_Database extends Database
         return $sql->execute();
     }
 
-    // 📌 4️⃣ Cập nhật danh mục
+    // Cập nhật danh mục
     public function updateCategory($id, $name)
     {
         $sql = self::$connection->prepare("UPDATE categories SET name=? WHERE id=?");
@@ -38,7 +38,7 @@ class Category_Database extends Database
         return $sql->execute();
     }
 
-    // 📌 5️⃣ Xóa danh mục
+    // Xóa danh mục
     public function deleteCategory($id)
     {
         $sql = self::$connection->prepare("DELETE FROM categories WHERE id=?");
@@ -46,7 +46,7 @@ class Category_Database extends Database
         return $sql->execute();
     }
 
-    // 📌 6️⃣ Tìm kiếm danh mục theo tên
+    // Tìm kiếm danh mục theo tên
     public function searchCategories($keyword)
     {
         $keyword = "%$keyword%";
@@ -56,7 +56,7 @@ class Category_Database extends Database
         return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    // 📌 7️⃣ Lấy sản phẩm theo danh mục
+    // Lấy sản phẩm theo danh mục
     public function getProductsByCategory($categoryId)
     {
         $sql = self::$connection->prepare("SELECT * FROM products WHERE category_id = ?");
@@ -65,7 +65,7 @@ class Category_Database extends Database
         return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    // 📌 8️⃣ Lấy sản phẩm mới nhất
+    // Lấy sản phẩm mới nhất
     public function getLatestProducts($limit = 5)
     {
         $sql = self::$connection->prepare("SELECT * FROM products ORDER BY created_at DESC LIMIT ?");
