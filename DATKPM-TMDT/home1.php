@@ -142,6 +142,36 @@ $username = $isLoggedIn ? $_SESSION['currentUser']['name'] : '';
     </div>
   </section>
 
+  <!-- Section danh sách sản phẩm -->
+  <section class="products-list">
+    <div class="container">
+      <h2>Danh Sách Sản Phẩm</h2>
+      <div class="products-grid">
+        <?php foreach ($allProducts as $product): ?>
+          <div class="product-item">
+            <div class="product-image">
+              <img src="<?php echo !empty($product['ImageURL']) ? 'public/img/' . htmlspecialchars($product['ImageURL']) : 'public/img/placeholder.jpg'; ?>" 
+                   alt="<?php echo htmlspecialchars($product['ProductName']); ?>">
+            </div>
+            <div class="product-info">
+              <h3 class="product-name"><?php echo htmlspecialchars($product['ProductName']); ?></h3>
+              <p class="product-price">
+                <?php echo number_format($product['Price'], 0, ',', '.') . ' VNĐ'; ?>
+              </p>
+              <div class="product-actions">
+                <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                <button class="buy-now">Mua ngay</button>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+        <?php if (empty($allProducts)): ?>
+          <p class="no-products">Hiện tại không có sản phẩm nào để hiển thị.</p>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
+
   <script>
     const categoriesFromDB = <?php echo json_encode($categoriesFromDB); ?>;
     console.log(categoriesFromDB);
