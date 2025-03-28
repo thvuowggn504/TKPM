@@ -11,9 +11,21 @@ if (isset($_GET['logout'])) {
 }
 
 $productsDB = new Product_Database();
-$allProducts = $productsDB->getAllProducts();
+
+// Xử lý tìm kiếm AJAX
+if (isset($_GET['search'])) {
+  $keyword = trim($_GET['search']);
+  $searchResults = !empty($keyword) ? $productsDB->searchProducts($keyword) : [];
+  header('Content-Type: application/json');
+  echo json_encode($searchResults);
+  exit();
+}
+
+// Lấy 3 sản phẩm mới nhất
+$latestProducts = $productsDB->getLatestProducts(3); // Giới hạn 3 sản phẩm
 
 $categoriesFromDB = [];
+$allProducts = $productsDB->getAllProducts();
 foreach ($allProducts as $product) {
   $categoryID = $product['CategoryID'];
   $sql = $productsDB->getConnection()->prepare("SELECT CategoryName FROM Categories WHERE CategoryID = ?");
@@ -99,8 +111,7 @@ $username = $isLoggedIn ? $_SESSION['currentUser']['name'] : '';
         <p>
           Discover thousands of high-quality products at unbeatable prices only at TPV <b>E_COMMERCE</b>.<br> We provide
           a seamless, secure, and convenient online shopping experience,<br> making it easier than ever to find
-          everything
-          you need.
+          everything you need.
         </p>
         <div class="action">
           <button class="action-1">Action 1</button>
@@ -108,18 +119,25 @@ $username = $isLoggedIn ? $_SESSION['currentUser']['name'] : '';
         </div>
       </div>
       <div class="card-stack">
-        <div class="card left" data-position="left">
-          <img src="public/img/iphone16pm.jpg" alt="iPhone">
-          <div class="title">iPhone Pro</div>
-        </div>
-        <div class="card center" data-position="center">
-          <img src="public/img/Airpod_pro2.jpg" alt="MacBook">
-          <div class="title">Airpods Pro 2</div>
-        </div>
-        <div class="card right" data-position="right">
-          <img src="public/img/78446_laptop_lenovo_ideapad_gami-removebg-preview.png" alt="Apple Watch">
-          <div class="title">Macbook Air</div>
-        </div>
+        <?php if (count($latestProducts) >= 3): ?>
+          <div class="card left" data-position="left">
+            <img src="public/img/<?php echo htmlspecialchars($latestProducts[0]['ImageURL']); ?>"
+              alt="<?php echo htmlspecialchars($latestProducts[0]['ProductName']); ?>">
+            <div class="title"><?php echo htmlspecialchars($latestProducts[0]['ProductName']); ?></div>
+          </div>
+          <div class="card center" data-position="center">
+            <img src="public/img/<?php echo htmlspecialchars($latestProducts[1]['ImageURL']); ?>"
+              alt="<?php echo htmlspecialchars($latestProducts[1]['ProductName']); ?>">
+            <div class="title"><?php echo htmlspecialchars($latestProducts[1]['ProductName']); ?></div>
+          </div>
+          <div class="card right" data-position="right">
+            <img src="public/img/<?php echo htmlspecialchars($latestProducts[2]['ImageURL']); ?>"
+              alt="<?php echo htmlspecialchars($latestProducts[2]['ProductName']); ?>">
+            <div class="title"><?php echo htmlspecialchars($latestProducts[2]['ProductName']); ?></div>
+          </div>
+        <?php else: ?>
+          <p>No products available to display.</p>
+        <?php endif; ?>
       </div>
     </div>
   </section>
@@ -145,6 +163,59 @@ $username = $isLoggedIn ? $_SESSION['currentUser']['name'] : '';
       if (loginBtn) loginBtn.style.display = 'block';
       if (userInfo) userInfo.classList.add('hidden');
     }
+
+    // Tìm kiếm sản phẩm
+    const searchInput = document.getElementById('search-input');
+    const dropdownSearch = document.getElementById('dropdown-search');
+
+    searchInput.addEventListener('input', function () {
+      const keyword = this.value.trim();
+      if (keyword.length > 0) {
+        fetch(`home1.php?search=${encodeURIComponent(keyword)}`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(searchResults => {
+            console.log('Search Results:', searchResults); // Kiểm tra dữ liệu trả về
+            dropdownSearch.innerHTML = '';
+            if (searchResults.length > 0) {
+              searchResults.forEach(product => {
+                const productLink = document.createElement('a');
+                productLink.href = '#';
+                productLink.textContent = product.ProductName;
+                dropdownSearch.appendChild(productLink);
+              });
+            } else {
+              dropdownSearch.innerHTML = '<p>Không tìm thấy sản phẩm nào.</p>';
+            }
+            dropdownSearch.classList.add('active');
+          })
+          .catch(error => {
+            console.error('Error fetching search results:', error);
+            dropdownSearch.innerHTML = '<p>Có lỗi xảy ra khi tìm kiếm.</p>';
+            dropdownSearch.classList.add('active');
+          });
+      } else {
+        dropdownSearch.innerHTML = '<p>Nhập từ khóa để tìm kiếm...</p>';
+        dropdownSearch.classList.remove('active');
+      }
+    });
+
+    searchInput.addEventListener('focus', () => {
+      if (searchInput.value.trim() === '') {
+        dropdownSearch.innerHTML = '<p>Nhập từ khóa để tìm kiếm...</p>';
+      }
+      dropdownSearch.classList.add('active');
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.search-container')) {
+        dropdownSearch.classList.remove('active');
+      }
+    });
   </script>
   <script src="public/js/scripts-home.js"></script>
 </body>

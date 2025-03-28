@@ -573,14 +573,18 @@ section .container .content .action .action-2:hover {
 /* Định dạng dropdown */
 .user-dropdown {
   position: absolute;
-  top: 100%; /* Hiển thị ngay dưới user-info */
-  left: 50%; /* Căn giữa theo chiều ngang */
-  transform: translateX(-50%); /* Dịch ngược lại 50% chiều rộng */
+  top: 100%;
+  /* Hiển thị ngay dưới user-info */
+  left: 50%;
+  /* Căn giữa theo chiều ngang */
+  transform: translateX(-50%);
+  /* Dịch ngược lại 50% chiều rộng */
   background: white;
   border: 1px solid #ccc;
   padding: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 9999; /* Đảm bảo dropdown không bị che */
+  z-index: 9999;
+  /* Đảm bảo dropdown không bị che */
   min-width: 150px;
   text-align: center;
 }
@@ -589,7 +593,8 @@ section .container .content .action .action-2:hover {
 .user-dropdown a,
 .user-dropdown span {
   display: block;
-  color: black; /* Màu chữ đen */
+  color: black;
+  /* Màu chữ đen */
   text-decoration: none;
   padding: 8px 10px;
   cursor: pointer;
@@ -607,10 +612,57 @@ section .container .content .action .action-2:hover {
 }
 
 #user-info {
-  position: relative; /* Để dropdown có thể căn theo user-info */
+  position: relative;
+  /* Để dropdown có thể căn theo user-info */
   cursor: pointer;
 }
 
 #user-info:hover .user-dropdown {
   display: block;
 }
+
+/* Dropdown tìm kiếm */
+.dropdown-search {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+/* Hiển thị dropdown */
+.dropdown-search.active {
+  display: block;
+}
+
+/* Định dạng các liên kết trong dropdown */
+.dropdown-search a {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #000000;
+  /* Chữ màu đen */
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Hiệu ứng hover */
+.dropdown-search a:hover {
+  background: #f0f0f0;
+  color: #000000;
+}
+
+/* Thông báo trong dropdown */
+.dropdown-search p {
+  padding: 5px 10px;
+  margin: 0;
+  color: #666;
+  /* Màu xám cho thông báo */
+  font-size: 14px;
+}
+

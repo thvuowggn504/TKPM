@@ -55,11 +55,34 @@ class Product_Database extends Database
     // Tìm kiếm sản phẩm theo tên
     public function searchProducts($keyword)
     {
-        $keyword = "%" . htmlspecialchars(strip_tags($keyword)) . "%";
-        $sql = $this->conn->prepare("SELECT * FROM products WHERE ProductName LIKE ?");
-        $sql->bind_param("s", $keyword);
-        $sql->execute();
-        return $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+        // Thêm % để tìm kiếm toàn phần
+        $searchTerm = "%$keyword%";
+
+        // Câu truy vấn tìm kiếm linh hoạt
+        $stmt = $this->getConnection()->prepare("
+            SELECT ProductID, ProductName, ImageURL 
+            FROM Products 
+            WHERE ProductName LIKE ? 
+            OR Description LIKE ?
+            LIMIT 10
+        ");
+
+        // Bind các tham số
+        $stmt->bind_param("ss", $searchTerm, $searchTerm);
+
+        // Thực thi truy vấn
+        $stmt->execute();
+
+        // Lấy kết quả
+        $result = $stmt->get_result();
+
+        // Chuyển đổi kết quả sang mảng
+        $searchResults = [];
+        while ($row = $result->fetch_assoc()) {
+            $searchResults[] = $row;
+        }
+
+        return $searchResults;
     }
 
     // Lấy sản phẩm mới nhất

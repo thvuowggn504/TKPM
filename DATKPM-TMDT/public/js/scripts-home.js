@@ -142,3 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.reload();
     });
 });
+
+document.querySelectorAll(".dropdown-menu a").forEach(item => {
+    item.addEventListener("click", function (event) {
+        event.preventDefault();
+        const productName = this.textContent.trim();
+        window.location.href = `ctsp.php?product=${encodeURIComponent(productName)}`;
+    });
+});
