@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-<?php
-require_once 'config.php';
-class Database
-{
-    public static $connection;
-    public function __construct()
-    {
-        if (!self::$connection) {
-            self::$connection = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-            self::$connection->set_charset(DB_CHARSET);
-        }
-        return self::$connection;
-    }
-}
-=======
 <?php
 require_once 'config.php';
 class Database {
@@ -31,5 +15,4 @@ class Database {
         return self::$conn;
     }
 }
->>>>>>> 0303bbfa776af79f2236cdc5a350d409aa44073d
 ?>
