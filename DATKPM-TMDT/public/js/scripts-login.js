@@ -7,15 +7,13 @@ registerButton.addEventListener("click", () => {
 });
 
 loginButton.addEventListener("click", () => {
-    container.classList.remove("right-panel-active")
-})
+    container.classList.remove("right-panel-active");
+});
 
-//Xử lý login và register
 document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.querySelector(".register-container form");
     const loginForm = document.querySelector(".login-container form");
 
-    // Xử lý đăng ký
     registerForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const name = registerForm.querySelector("input[type='text']").value;
@@ -38,25 +36,29 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Đăng ký thành công! Vui lòng đăng nhập.");
     });
 
-    // Xử lý đăng nhập
     loginForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const email = loginForm.querySelector("input[type='email']").value;
         const password = loginForm.querySelector("input[type='password']").value;
 
+        console.log("Email:", email, "Password:", password);
         const users = JSON.parse(localStorage.getItem("users")) || [];
+        console.log("Users in localStorage:", users);
         const savedUser = users.find(user => user.email === email && user.password === password);
+        console.log("savedUser:", savedUser);
 
         if (!savedUser) {
             alert("Sai email hoặc mật khẩu!");
             return;
         }
 
-        // Lưu thông tin người dùng hiện tại (không lưu password để tăng bảo mật)
         localStorage.setItem("currentUser", JSON.stringify({ name: savedUser.name, email: savedUser.email }));
         alert(`Xin chào, ${savedUser.name}! Đăng nhập thành công.`);
 
-        // Chuyển hướng đến trang chủ
-        window.location.href = "home.html";
+        // Trì hoãn chuyển hướng
+        setTimeout(() => {
+            window.location.replace("home1.php");
+            console.log("Redirecting to home1.php");
+        }, 100);
     });
 });
