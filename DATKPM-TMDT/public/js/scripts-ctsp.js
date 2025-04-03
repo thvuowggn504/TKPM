@@ -25,3 +25,4 @@ document.addEventListener('mouseleave', function () {
         centerCard.style.transform = '';
     }
 });
+

@@ -6,4 +6,8 @@
 ('Apple Watch Ultra', 'Watch', 799.99, 8, 'Đồng hồ thông minh bền bỉ cho dân thể thao.', 'apple_watch_ultra.jpg'),
 ('Apple Watch SE', 'Watch', 249.99, 12, 'Giá tốt với đầy đủ tính năng cơ bản.', 'apple_watch_se.jpg'),
 ('AirPods Pro 2', 'AirPods', 249.99, 18, 'Tai nghe chống ồn với chất lượng âm thanh tuyệt vời.', 'airpods_pro_2.jpg'),
+<<<<<<< HEAD
 ('AirPods Max', 'AirPods', 549.99, 6, 'Tai nghe over-ear cao cấp với âm thanh Hi-Fi.', 'airpods_max.jpg');
+=======
+('AirPods Max', 'AirPods', 549.99, 6, 'Tai nghe over-ear cao cấp với âm thanh Hi-Fi.', 'airpods_max.jpg');
+>>>>>>> 0303bbfa776af79f2236cdc5a350d409aa44073d
