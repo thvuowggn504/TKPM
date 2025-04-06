@@ -1,4 +1,3 @@
-
 <?php
 define('DB_NAME', 'ecommercedb');
 define('DB_USER', 'root');
