@@ -151,7 +151,7 @@ $products = $productDB->getAllProducts();
                                         <td><?php echo htmlspecialchars($product['Price']); ?></td>
                                         <td><?php echo htmlspecialchars($product['Stock'] ?? 'N/A'); ?></td>
                                         <td><?php echo htmlspecialchars($product['Description']); ?></td>
-                                        <td><?php echo htmlspecialchars($product['ImageURL'] ?? 'N/A'); ?></td>
+                                        <td><?php echo htmlspecialchars($product['ImageURL']); ?></td>
                                         <td>
                                             <a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#editEmployeeModal" 
                                                data-id="<?php echo $product['ProductID']; ?>" 
